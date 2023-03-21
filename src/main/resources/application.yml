@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: reggie
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.213.128:3306/reggie
+#    username: springboot
+#    password: 123456
+
+  main:
+    allow-circular-references: true
+
+  mail:
+    host: "smtp.qq.com"
+    username: "1776331069@qq.com"
+    password: "iiejhlvzzkweehie"
+  cache:
+    type: redis
+  shardingsphere:
+    datasource:
+      names: master,slave
+
+      master:
+       type: com.alibaba.druid.pool.DruidDataSource
+       driver-class-name: com.mysql.cj.jdbc.Driver
+       url: jdbc:mysql://192.168.213.128:3306/reggie
+       username: springboot
+       password: 123456
+
+      slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.213.129:3306/reggie
+        username: springboot
+        password: 123456
+
+    masterslave:
+      load-balance-algorithm-type: round_robin
+      name: ms
+      master-data-source-name: master
+      slave-data-source-names: slave
+    props:
+      sql:
+        show: true
+
+
+logging:
+  level:
+    com.example.reggie: debug
+images:
+  basePath: "D:\\Codes\\learning\\images"
+
+validate-code:
+  expire-time: 5 #过期时间，单位（分钟）
